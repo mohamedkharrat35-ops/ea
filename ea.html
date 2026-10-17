@@ -1,0 +1,1133 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>projet ea</title>
+    <!-- MathJax for LaTeX rendering -->
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)'], ['$', '$']],
+                displayMath: [['\\[', '\\]'], ['$$', '$$']]
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+    <style>
+:root {
+    --primary: #1565c0;
+    --primary-light: #e3f2fd;
+    --accent: #4CAF50;
+    --text-main: #333;
+    --text-soft: #555;
+    --border-soft: #e0e0e0;
+    --bg-page: #f5f7fb;
+    --bg-card: #ffffff;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: var(--text-main);
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px 24px 60px;
+    background: radial-gradient(circle at top left, #eef3ff 0, #f5f7fb 40%, #ffffff 100%);
+}
+
+h1 {
+    font-size: 26px;
+    text-transform: uppercase;
+    color: #000;
+    margin-bottom: 25px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-align: center;
+}
+
+.header-info {
+    margin-bottom: 40px;
+    font-size: 15px;
+    color: #222;
+    padding: 16px 20px;
+    border-radius: 10px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-soft);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.03);
+}
+
+.header-info p {
+    margin: 6px 0;
+}
+
+.header-info strong {
+    font-weight: 700;
+}
+
+.sommaire {
+    margin-bottom: 50px;
+    padding: 18px 22px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #e3f2fd, #f1f8e9);
+    border: 1px solid #bbdefb;
+}
+
+.sommaire h2 {
+    font-size: 18px;
+    text-transform: uppercase;
+    margin-bottom: 15px;
+    color: #000;
+}
+
+.toc-list,
+.toc-list ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.toc-list ul {
+    padding-left: 20px;
+    margin-top: 6px;
+}
+
+.toc-list li {
+    margin-bottom: 6px;
+    color: #333;
+    position: relative;
+}
+
+.toc-list > li {
+    padding-left: 8px;
+}
+
+.toc-list li::before {
+    content: "•";
+    color: var(--primary);
+    font-weight: bold;
+    display: inline-block;
+    width: 1em;
+    margin-left: -1em;
+}
+
+h2 {
+    font-size: 19px;
+    font-weight: 600;
+    margin-top: 45px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    color: #222;
+    border-left: 4px solid var(--primary);
+    padding-left: 10px;
+}
+
+/* Badge de numéro devant h2 */
+h2::before {
+    content: attr(data-section);
+    display: inline-block;
+    margin-right: 8px;
+    padding: 2px 8px;
+    border-radius: 999px;
+    background-color: var(--primary);
+    color: #fff;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    vertical-align: middle;
+}
+
+h3 {
+    font-size: 17px;
+    font-weight: 600;
+    margin-top: 35px;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+h4 {
+    font-size: 15px;
+    font-weight: 600;
+    margin-top: 25px;
+    margin-bottom: 10px;
+    color: #444;
+}
+
+p {
+    margin-bottom: 15px;
+    text-align: justify;
+    font-size: 15px;
+    color: var(--text-soft);
+}
+
+ul {
+    margin-bottom: 20px;
+    padding-left: 25px;
+}
+
+li {
+    margin-bottom: 8px;
+    font-size: 15px;
+}
+
+/* Drop cap sur le 1er paragraphe après un h2 et h3 */
+h2 + p::first-letter {
+    font-family: "Georgia", "Times New Roman", serif;
+    font-size: 2.7em;
+    float: left;
+    line-height: 0.9;
+    padding: 4px 8px 0 0;
+    color: var(--primary);
+}
+
+h3 + p::first-letter {
+    font-family: "Georgia", "Times New Roman", serif;
+    font-size: 2.2em;
+    float: left;
+    line-height: 0.9;
+    padding: 3px 6px 0 0;
+    color: var(--primary);
+}
+
+/* Surlignage des termes importants */
+.highlight-term {
+    font-weight: 600;
+    color: var(--primary);
+}
+
+/* Mise en valeur douce des <strong> existants */
+p strong,
+li strong {
+    color: #000;
+    background: rgba(21, 101, 192, 0.06);
+    padding: 1px 4px;
+    border-radius: 3px;
+}
+
+/* Style de paragraphe "note" */
+.note {
+    border-left: 3px solid var(--primary);
+    padding-left: 10px;
+    margin: 10px 0 18px;
+    background: rgba(227, 242, 253, 0.5);
+}
+
+/* Images */
+.img-container {
+    background-color: #f7f8f9;
+    border-radius: 10px;
+    min-height: 260px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 25px 0 10px 0;
+    color: #adb5bd;
+    border: 1px solid #ebedf0;
+    overflow: hidden;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.04);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.img-container:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+}
+
+.img-container img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+.img-placeholder-icon {
+    font-size: 48px;
+    margin-bottom: 10px;
+    opacity: 0.5;
+}
+
+.img-text {
+    font-size: 12px;
+    font-family: sans-serif;
+}
+
+/* Simulations */
+.simulation-container {
+    width: 100%;
+    margin: 25px 0;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+    border: 1px solid #c8e6c9;
+    background: #f9fff9;
+}
+
+.simulation-container iframe {
+    width: 100%;
+    height: 500px;
+    border: none;
+}
+
+.simulation-label {
+    background-color: var(--accent);
+    color: white;
+    padding: 8px 15px;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.caption {
+    font-style: italic;
+    font-size: 13.5px;
+    color: #222;
+    margin-bottom: 25px;
+    display: block;
+    text-align: center;
+}
+
+/* Tables */
+.table-container {
+    margin: 30px 0;
+    background: var(--bg-card);
+    border-radius: 10px;
+    padding: 12px 14px 16px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.04);
+    border: 1px solid var(--border-soft);
+}
+
+.blue-bar {
+    height: 25px;
+    background-color: #e3f2fd;
+    border: 1px solid #bbdefb;
+    margin-bottom: 10px;
+    border-radius: 6px;
+}
+
+.orange-bar {
+    height: 25px;
+    background-color: #fff3e0;
+    border: 1px solid #ffe0b2;
+    margin-bottom: 10px;
+    border-radius: 6px;
+}
+
+.yellow-highlight-bar {
+    height: 25px;
+    background-color: #fff9c4;
+    border: 1px solid #fff59d;
+    margin: 15px 0;
+    border-radius: 4px;
+}
+
+.blue-highlight-bar {
+    height: 25px;
+    background-color: #e3f2fd;
+    border: 1px solid #90caf9;
+    margin: 15px 0;
+    border-radius: 4px;
+}
+
+.table-title {
+    font-weight: 600;
+    margin-bottom: 10px;
+    display: block;
+}
+
+table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: 14px;
+    border: 1px solid #dee2e6;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+th,
+td {
+    border-bottom: 1px solid #dee2e6;
+    border-right: 1px solid #dee2e6;
+    padding: 12px 15px;
+    text-align: left;
+    vertical-align: top;
+}
+
+tr:last-child td {
+    border-bottom: none;
+}
+
+td:last-child,
+th:last-child {
+    border-right: none;
+}
+
+th {
+    background-color: #f8f9fa;
+    font-weight: 700;
+    color: #444;
+}
+
+tr:nth-child(even) td {
+    background-color: #fafbfc;
+}
+
+/* Checkbox-like results */
+.checkbox-result {
+    display: inline-flex;
+    align-items: center;
+    margin: 10px 0;
+    font-weight: 500;
+    padding: 6px 10px;
+    border-radius: 6px;
+    background: #fafafa;
+    border: 1px solid #e0e0e0;
+}
+
+.square-icon {
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    margin-right: 8px;
+    border: 1px solid;
+    position: relative;
+    border-radius: 3px;
+}
+
+.red-sq {
+    border-color: #ffcccc;
+    background-color: rgba(255, 0, 0, 0.04);
+}
+
+.green-sq {
+    border-color: #c8e6c9;
+    background-color: rgba(0, 128, 0, 0.05);
+}
+
+/* Equations */
+.equation-block {
+    margin: 15px 0;
+    padding: 8px 10px;
+    overflow-x: auto;
+    background: #fafafa;
+    border-radius: 6px;
+    border: 1px dashed #d0d0d0;
+}
+
+hr {
+    border: 0;
+    border-top: 1px solid #e0e0e0;
+    margin: 40px 0;
+}
+
+.biblio-list {
+    list-style-type: decimal;
+    padding-left: 20px;
+}
+
+.biblio-list li {
+    margin-bottom: 8px;
+    font-size: 14px;
+}
+
+.biblio-list em {
+    font-style: italic;
+}
+
+/* Petits détails responsives */
+@media (max-width: 768px) {
+    body {
+        padding: 24px 14px 40px;
+    }
+
+    .header-info,
+    .sommaire {
+        padding: 14px 16px;
+    }
+
+    .simulation-container iframe {
+        height: 380px;
+    }
+}
+
+/* Logo (hors du @media pour être toujours appliqué) */
+.logo {
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+.logo img {
+    max-width: 150px;
+    height: auto;
+    display: inline-block;
+    background: transparent;
+}
+    </style>
+</head>
+
+  <div class="logo">
+        <img src="ensi logo.jpg" alt="Logo de l'ENSI" style="display: block; margin: 0 auto; max-width: 150px; ba">
+    </div>"
+<body>
+
+    <h1>RAPPORT DE PROJET D'ÉLECTRONIQUE ANALOGIQUE</h1>
+
+    <div class="header-info">
+        <p><strong>École Nationale des Sciences de l'Informatique (ENSI)</strong></p>
+        <p>Classe :  II1 C - Année universitaire :  2025/2026</p>
+        <p><strong>Professeur : Mr. Soltani Moez</strong></p>
+        <p><strong>Auteurs :  Hatem Ben Akacha / Mohamed Amine Ferjani / Ghorbel Muhammad Aziz / Mohamed Kharrat / Mohamed Manar Sefi</strong></p>
+    </div>
+
+    <hr>
+   
+    <div class="sommaire">
+        <h2>SOMMAIRE</h2>
+        <ul class="toc-list">
+            <li>1.  INTRODUCTION GÉNÉRALE
+                <ul>
+                    <li>1.1 Présentation du système étudié</li>
+                    <li>1.2 Objectifs du projet</li>
+                </ul>
+            </li>
+            <li>2. ÉTUDE THÉORIQUE COMPLÈTE
+                <ul>
+                    <li>2.1 Lois fondamentales de l'électronique</li>
+                    <li>2.2 Caractéristiques des diodes</li>
+                    <li>2.3 Caractéristiques des transistors NPN</li>
+                    <li>2.4 Analyse des circuits logiques</li>
+                </ul>
+            </li>
+            <li>3. SIMULATIONS ISIS PROTEUS
+                <ul>
+                    <li>3.1 Montage pour caractéristique directe de diode</li>
+                    <li>3.2 Montage pour caractéristique inverse de diode</li>
+                    <li>3.3 Circuits logiques à diodes</li>
+                    <li>3.4 Circuits à transistors NPN</li>
+                </ul>
+            </li>
+            <li>4. ANALYSE DES RÉSULTATS
+                <ul>
+                    <li>4.1 Interprétation des courbes</li>
+                    <li>4.2 Validation théorique vs simulation</li>
+                </ul>
+            </li>
+            <li>5. CONCLUSION ET PERSPECTIVES</li>
+        </ul>
+    </div>
+
+    <h2>1. INTRODUCTION GÉNÉRALE</h2>
+
+    <h3>1.1 Présentation du système étudié</h3>
+    
+    <div style="height: 10px;"></div>
+    <p><em>Ce circuit représente l'ensemble des montages étudiés dans ce projet, incluant les caractéristiques des diodes 1N4007 et des transistors BC547, ainsi que les portes logiques associées.</em></p>
+    <p>L'utilisation du logiciel « ISIS PROTEUS » est essentielle pour la simulation précise de ces circuits électroniques. </p>
+
+    <h3>1.2 Objectifs du projet</h3>
+    <ul>
+        <li>Étudier les caractéristiques électriques des diodes en polarisation directe et inverse</li>
+        <li>Analyser le comportement des transistors NPN BC547 en commutation</li>
+        <li>Réaliser des portes logiques élémentaires à base de diodes et transistors</li>
+        <li>Comprendre les principes fondamentaux de l'électronique analogique</li>
+    </ul>
+
+    <hr>
+
+    <h2>2. PARTIE 1 : ÉTUDE DES DIODES</h2>
+
+    <h3>2.1 Caractéristique en polarisation directe</h3>
+
+    <h4>2.1.1 Montage expérimental</h4>
+    <p>Le montage simulé dans Proteus ISIS est présenté ci-dessous : </p>
+    
+    <!-- IMAGE 1 :  Circuit polarisation directe -->
+    <div class="img-container">
+        <!-- INSÉREZ VOTRE IMAGE ICI :  Remplacez le contenu ci-dessous par votre balise img -->
+        <img src="diode directe.png" alt="Circuit de simulation pour l'étude de la caractéristique directe de la diode 1N4007">
+        <!-- Si pas d'image, le placeholder s'affiche : 
+        <div class="img-placeholder-icon">📷</div>
+        <div class="img-text">Insérez votre image ici</div>
+        -->
+    </div>
+    <span class="caption">Circuit de simulation pour l'étude de la caractéristique directe de la diode 1N4007</span>
+
+    <h4>2.1.2 Analyse théorique</h4>
+    <p>Pour ce circuit, on applique la loi des mailles :</p>
+
+    <!-- IMAGE 2 :  Représentation de la maille -->
+    
+    <!-- SIMULATION INTERACTIVE 1 :  DIODE a) - Polarisation directe -->
+    <div class="simulation-container">
+        <div class="simulation-label">🔌 Simulation Interactive - Modifiez les valeurs des composants</div>
+    <iframe src="https://tinyurl.com/25etkorc" allowfullscreen></iframe>
+    </div>
+    <span class="caption">Simulation interactive du circuit en polarisation directe - Vous pouvez modifier les paramètres des composants</span>
+
+    <div class="equation-block">
+        $$ V_{in} - V_R - V_D = 0 $$
+    </div>
+    <p><strong>Partie du circuit :</strong> Maille principale contenant la source, la résistance et la diode</p>
+
+    <p>Où \( V_R = R \times I_D \) selon la loi d'Ohm, on obtient : <br>
+    \( V_{in} = R \times I_D + V_D \)</p>
+
+    <p>La relation entre le courant et la tension dans une diode est donnée par l'équation de Shockley :</p>
+    
+    <div class="equation-block">
+        $$ I_D = I_S \left( e^{\frac{V_D}{n V_T}} - 1 \right) $$
+    </div>
+    <p><strong>Partie du circuit :</strong> Caractéristique intrinsèque de la diode</p>
+
+    <p>Avec : </p>
+    <ul>
+        <li>\( I_S \) = courant de saturation (\(10^{-14}\) A pour le silicium)</li>
+        <li>\( n \) = facteur d'idéalité (\(\approx 1\) à 2)</li>
+        <li>\( V_T \) = tension thermique = \( \frac{kT}{q} = 26 \) mV à 300 K
+            <ul>
+                <li>\( k \) = constante de Boltzmann = \( 1,38 \times 10^{-23} \) J/K</li>
+                <li>\( T \) = température absolue = 300 K</li>
+                <li>\( q \) = charge élémentaire = \( 1,6 \times 10^{-19} \) C</li>
+            </ul>
+        </li>
+    </ul>
+
+    <p>Étude de la fonction \( f(V_D) = I_S \left( e^{\frac{V_D}{n V_T}} - 1 \right) \) :</p>
+    <ul>
+        <li>Domaine de définition : \( V_D \in \mathbb{R} \)</li>
+        <li>Dérivée : \( f'(V_D) = I_S \cdot \frac{1}{n V_T} e^{\frac{V_D}{n V_T}} \)</li>
+        <li>Signe de la dérivée :  \( f'(V_D) > 0 \) pour tout \( V_D \) → fonction strictement croissante</li>
+        <li>Limites : 
+            <ul>
+                <li>\( \lim_{V_D \to +\infty} f(V_D) = +\infty \)</li>
+                <li>\( \lim_{V_D \to -\infty} f(V_D) = -I_S \)</li>
+            </ul>
+        </li>
+        <li>Point d'inflexion : \( f''(V_D) = 0 \) - \( V_D = 0 \)</li>
+    </ul>
+
+    <!-- IMAGE 3 :  Courbe théorique I-V -->
+    <div class="img-container">
+        <img src="courbe_diode_directe.png" alt="Repr��sentation théorique de la caractéristique courant-tension d'une diode en silicium">
+    </div>
+    <span class="caption">Représentation théorique de la caractéristique courant-tension d'une diode en silicium</span>
+
+    <h4>2.1.3 Résultats de simulation</h4>
+    <p>Le tableau ci-dessous présente les mesures obtenues par simulation :</p>
+
+    <div class="table-container">
+        <div class="blue-bar"></div>
+        <span class="table-title">Tableau 1 : Mesures caractéristique directe</span>
+        <table>
+            <thead>
+                <tr>
+                    <th>\( V_{in} \) (V)</th>
+                    <th>\( V_D \) (V)</th>
+                    <th>\( I_D \) (mA)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>0.0</td><td>0.000</td><td>0.000</td></tr>
+                <tr><td>0.5</td><td>0.478</td><td>0.022</td></tr>
+                <tr><td>0.6</td><td>0.574</td><td>0.026</td></tr>
+                <tr><td>0.7</td><td>0.680</td><td>0.320</td></tr>
+                <tr><td>1.0</td><td>0.715</td><td>2.850</td></tr>
+                <tr><td>2.0</td><td>0.742</td><td>12.580</td></tr>
+                <tr><td>5.0</td><td>0.775</td><td>42.250</td></tr>
+                <tr><td>10.0</td><td>0.789</td><td>92.110</td></tr>
+                <tr><td>20.0</td><td>0.801</td><td>191.990</td></tr>
+                <tr><td>30.0</td><td>0.809</td><td>291.910</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- IMAGE 4 :  Courbe simulation Proteus directe -->
+    <div class="img-container">
+        <img src="courbe diode directe.png" alt="Courbe obtenue par simulation dans Proteus ISIS">
+    </div>
+    <span class="caption">Courbe obtenue par simulation dans Proteus ISIS</span>
+
+    <div class="checkbox-result">
+        <span class="square-icon red-sq"></span> <strong>Tension seuil déterminée :  V_s = 0,68 V</strong>
+    </div>
+
+    <p>Cette valeur correspond bien à la tension seuil typique d'une diode en silicium (0,6 à 0,7 V).</p>
+
+    <h4>2.1.4 Interprétation</h4>
+    <p>La courbe montre clairement deux régions distinctes :</p>
+    <ul>
+        <li>Pour \( V_D < V_s \) : courant négligeable (diode bloquée)</li>
+        <li>Pour \( V_D > V_s \) : courant qui augmente exponentiellement (diode passante)</li>
+    </ul>
+    <p>Cette caractéristique non linéaire est essentielle au fonctionnement de nombreuses applications électroniques comme les redresseurs et les circuits de protection.</p>
+
+    <hr>
+
+    <h3>2.2 Caractéristique en polarisation inverse</h3>
+
+    <h4>2.2.1 Montage expérimental</h4>
+    <p>Le montage simulé est le même qu'en polarisation directe, mais avec la diode inversée :</p>
+
+    <!-- IMAGE 5 : Circuit polarisation inverse -->
+    <div class="img-container">
+        <img src="diode indirecte.png" alt="Circuit de simulation pour l'étude de la caractéristique inverse">
+    </div>
+    <span class="caption">Circuit de simulation pour l'étude de la caractéristique inverse</span>
+
+    <!-- SIMULATION INTERACTIVE 2 : DIODE b) - Polarisation inverse -->
+    <div class="simulation-container">
+        <div class="simulation-label">🔌 Simulation Interactive - Modifiez les valeurs des composants</div>
+        <iframe src="https://tinyurl.com/2btk68qv" allowfullscreen></iframe>
+    </div>
+    <span class="caption">Simulation interactive du circuit en polarisation inverse - Vous pouvez modifier les paramètres des composants</span>
+
+    <h4>2.2.2 Analyse théorique</h4>
+    <p>En polarisation inverse, l'équation de Shockley devient :</p>
+    <div class="equation-block">
+        $$ I_D = I_S \left( e^{\frac{-|V_D|}{n V_T}} - 1 \right) \approx -I_S $$
+    </div>
+    <p><strong>Partie du circuit :</strong> Diode polarisée en inverse</p>
+    
+    <p>Le courant inverse est donc pratiquement constant et égal au courant de saturation \( I_S \), qui est très faible (de l'ordre du nA pour la 1N4007).</p>
+
+    <h4>2.2.3 Résultats de simulation</h4>
+    
+    <div class="table-container">
+        <div class="blue-bar"></div>
+        <span class="table-title">Tableau 2 : Mesures caractéristique inverse</span>
+        <table>
+            <thead>
+                <tr>
+                    <th>\( V_{in} \) (V)</th>
+                    <th>\( V_D \) (V)</th>
+                    <th>\( I_D \) (µA)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>0.0</td><td>0.000</td><td>0.000</td></tr>
+                <tr><td>5.0</td><td>-4.999</td><td>-0.021</td></tr>
+                <tr><td>10.0</td><td>-9.999</td><td>-0.021</td></tr>
+                <tr><td>15.0</td><td>-14.999</td><td>-0.021</td></tr>
+                <tr><td>20.0</td><td>-19.999</td><td>-0.021</td></tr>
+                <tr><td>25.0</td><td>-24.999</td><td>-0.021</td></tr>
+                <tr><td>30.0</td><td>-29.999</td><td>-0.021</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- IMAGE 6 :  Courbe simulation Proteus inverse -->
+    <div class="img-container">
+        <img src="diode inverse1.jpg" alt="Courbe obtenue par simulation dans Proteus ISIS - Polarisation inverse">
+    </div>
+    <span class="caption">Courbe obtenue par simulation dans Proteus ISIS</span>
+
+    <div class="checkbox-result">
+        <span class="square-icon red-sq"></span> <strong>Courant inverse moyen : I_inv = -0,021 µA</strong>
+    </div>
+
+    <h4>2.2.4 Interprétation</h4>
+    <p>On observe que : </p>
+    <ul>
+        <li>Le courant inverse est extrêmement faible (de l'ordre du nA)</li>
+        <li>Ce courant reste constant quelle que soit la tension inverse appliquée (tant qu'on ne dépasse pas la tension de claquage)</li>
+        <li>La diode se comporte comme un interrupteur ouvert en polarisation inverse</li>
+    </ul>
+    <p>Ces résultats confirment le modèle théorique d'une diode idéale en polarisation inverse.</p>
+
+    <hr>
+
+    <h3>2.3 Portes logiques à diodes</h3>
+
+    <h4>2.3.1 Montage (a) - Porte OU (OR)</h4>
+    
+    <!-- IMAGE 7 :  Schéma porte OU -->
+    <div class="img-container">
+        <img src="ou.jpg" alt="Schéma de simulation de la porte logique OU réalisée avec des diodes 1N4007">
+        
+    </div>
+    <span class="caption">Schéma de simulation de la porte logique OU réalisée avec des diodes 1N4007</span>
+
+    <!-- SIMULATION INTERACTIVE 3 : DIODE c) figure 1 - Porte OU -->
+    <div class="simulation-container">
+        <div class="simulation-label">🔌 Simulation Interactive - Porte OU à diodes</div>
+        <iframe src="https://tinyurl.com/25sr92bh" allowfullscreen></iframe>
+    </div>
+    <span class="caption">Simulation interactive de la porte logique OU - Vous pouvez modifier les valeurs des composants</span>
+
+    <p><strong>Analyse théorique :</strong><br>
+    Pour ce circuit, la sortie S est à l'état haut (≈ 5 V) si au moins une entrée (A ou B) est à l'état haut.  Sinon, la sortie est à l'état bas (≈ 0 V).</p>
+
+    <div class="checkbox-result">
+        <span class="square-icon green-sq"></span> <strong>Fonction logique : S = A + B (porte OU)</strong>
+    </div>
+
+    <div class="table-container">
+        <div class="blue-bar"></div>
+        <span class="table-title">Tableau 3 : Table de vérité porte OU</span>
+        <table>
+            <thead>
+                <tr>
+                    <th>A</th>
+                    <th>B</th>
+                    <th>S théorique</th>
+                    <th>S simulé (V)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>0</td><td>0</td><td>0</td><td>0.05</td></tr>
+                <tr><td>0</td><td>1</td><td>1</td><td>4.85</td></tr>
+                <tr><td>1</td><td>0</td><td>1</td><td>4.85</td></tr>
+                <tr><td>1</td><td>1</td><td>1</td><td>4.85</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <h4>2.3.2 Montage (b) - Porte ET (AND)</h4>
+
+    <!-- IMAGE 8 : Schéma porte ET -->
+    <div class="img-container">
+        <img src="et.jpg" alt="Schéma de simulation de la porte logique ET réalisée avec des diodes 1N4007">
+    </div>
+    <span class="caption">Schéma de simulation de la porte logique ET réalisée avec des diodes 1N4007</span>
+
+    <!-- SIMULATION INTERACTIVE 4 :  DIODE c) figure 2 - Porte ET -->
+    <div class="simulation-container">
+        <div class="simulation-label">🔌 Simulation Interactive - Porte ET à diodes</div>
+        <iframe src="https://tinyurl.com/2amjng54" allowfullscreen></iframe>
+    </div>
+    <span class="caption">Simulation interactive de la porte logique ET - Vous pouvez modifier les valeurs des composants</span>
+
+    <p><strong>Analyse théorique :</strong><br>
+    Pour ce circuit, la sortie S est à l'état haut (≈ 5 V) uniquement si les deux entrées (A et B) sont à l'état haut. Sinon, la sortie est à l'état bas (≈ 0 V).</p>
+
+    <div class="checkbox-result">
+        <span class="square-icon green-sq"></span> <strong>Fonction logique :  S = A · B (porte ET)</strong>
+    </div>
+
+    <div class="table-container">
+        <div class="blue-bar"></div>
+        <span class="table-title">Tableau 4 : Table de vérité porte ET</span>
+        <table>
+            <thead>
+                <tr>
+                    <th>A</th>
+                    <th>B</th>
+                    <th>S théorique</th>
+                    <th>S simulé (V)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>0</td><td>0</td><td>0</td><td>0.05</td></tr>
+                <tr><td>0</td><td>1</td><td>0</td><td>0.05</td></tr>
+                <tr><td>1</td><td>0</td><td>0</td><td>0.05</td></tr>
+                <tr><td>1</td><td>1</td><td>1</td><td>4.85</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <h4>2.3.3 Interprétation</h4>
+    <ul>
+        <li>La tension résiduelle de 0,05 V pour l'état bas est due à la tension de seuil des diodes</li>
+        <li>La tension de 4,85 V pour l'état haut est due à la chute de tension dans la résistance de 1 kΩ</li>
+        <li>Ces montages illustrent comment on peut réaliser des fonctions logiques de base avec des composants discrets</li>
+    </ul>
+
+    <hr>
+
+    <h2>3. PARTIE 2 : ÉTUDE DES TRANSISTORS</h2>
+
+    <h3>3.1 Circuit de commande de LED avec transistor BC547</h3>
+
+    <h4>3.1.1 Montage expérimental</h4>
+    <p>Le circuit simulé dans Proteus ISIS est le suivant :</p>
+
+    <!-- IMAGE 9 : Circuit commande LED -->
+    <div class="img-container">
+        <img src="led.gif" alt="Schéma de simulation du circuit de commande de LED">
+    </div>
+    <span class="caption">Schéma de simulation du circuit de commande de LED</span>
+
+    <h4>3.1.2 Caractéristiques du transistor BC547</h4>
+    <p>Le tableau ci-dessous résume les caractéristiques principales du transistor utilisé :</p>
+
+    <div class="table-container">
+        <div class="orange-bar"></div>
+        <span class="table-title">Tableau 5 : Caractéristiques électriques du BC547</span>
+        <table>
+            <thead>
+                <tr>
+                    <th>Paramètre</th>
+                    <th>Valeur</th>
+                    <th>Fonction</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>Tension collecteur-émetteur (VCEO)</td><td>45 V max</td><td>Tension max collecteur-émetteur quand la base est à 0 V</td></tr>
+                <tr><td>Tension base-émetteur (VBE)</td><td>6 V max</td><td>Tension max base-émetteur</td></tr>
+                <tr><td>Courant collecteur (IC)</td><td>100 mA</td><td>Courant max que peut supporter le transistor</td></tr>
+                <tr><td>Gain en courant (β)</td><td>200-300 (typique)</td><td>Facteur d'amplification du transistor</td></tr>
+                <tr><td>Température de jonction</td><td>150°C max</td><td>Température max de fonctionnement</td></tr>
+                <tr><td>Fréquence de transition</td><td>300 MHz</td><td>Fréquence max d'amplification utile</td></tr>
+                <tr><td>Tension de saturation collecteur-émetteur</td><td>0,25 V typ. </td><td>Tension aux bornes du transistor saturé</td></tr>
+                <tr><td>Tension de seuil base-émetteur</td><td>0,7 V</td><td>Tension nécessaire pour activer le transistor</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <h4>3.1.3 Analyse théorique</h4>
+    <p>Le transistor NPN BC547 fonctionne en mode de commutation (bloqué ou saturé).</p>
+
+    <!-- IMAGE 10 :  Schéma courants et tensions -->
+    
+    <span class="caption">Schéma avec les sens des courants et tensions notés</span>
+        <!-- SIMULATION INTERACTIVE - Circuit de commande LED -->
+    <div class="simulation-container">
+        <div class="simulation-label">🔌 Simulation Interactive - Circuit de commande LED avec transistor</div>
+        <iframe src="https://tinyurl.com/2blgtfv8" allowfullscreen></iframe>
+    </div>
+<span class="caption">Simulation interactive du circuit de commande LED - Vous pouvez modifier les paramètres des composants</span>
+
+    <p><strong>Cas 1 : E = 0 V (état bas)</strong></p>
+    <ul>
+        <li>La tension base-émetteur VBE ≈ 0 V</li>
+        <li>Le transistor est bloqué (IB = 0)</li>
+        <li>Aucun courant ne circule dans le collecteur (IC = 0)</li>
+        <li>La LED est éteinte</li>
+    </ul>
+
+    <div class="checkbox-result">
+        <span class="square-icon red-sq"></span> <strong>Pour E = 0 V :  LED éteinte</strong>
+    </div>
+
+    <p><strong>Cas 2 : E = 5 V (état haut)</strong><br>
+    On applique la loi des mailles dans la maille base-émetteur :</p>
+
+    <!-- IMAGE 11 :  Maille base-émetteur -->
+
+
+    <div class="equation-block">
+        $$ 5V - I_B \times R_1 - V_{BE} = 0 $$
+    </div>
+    <p><strong>Partie du circuit :</strong> Maille base-émetteur</p>
+
+    <p>Avec VBE = 0,7 V (tension seuil typique d'un transistor silicium) :</p>
+    <div class="equation-block">
+        $$ I_B = \frac{5V - 0,7V}{330\Omega} = \frac{4,3V}{330\Omega} = 13,03 mA $$
+    </div>
+
+    <p>On applique la loi des mailles dans la maille collecteur-émetteur :</p>
+
+    <!-- IMAGE 12 : Maille collecteur-émetteur -->
+
+
+    <div class="equation-block">
+        $$ 12V - V_{LED} - I_C \times R_2 - V_{CE} = 0 $$
+    </div>
+    <p><strong>Partie du circuit : </strong> Maille collecteur-émetteur</p>
+
+    <p>Pour une LED, VLED ≈ 2 V.  En saturation, VCE_sat ≈ 0,2 V :</p>
+    <div class="equation-block">
+        $$ I_C = \frac{12V - 2V - 0,2V}{470\Omega} = \frac{9,8V}{470\Omega} = 20,85 mA $$
+    </div>
+
+    <p>Pour vérifier que le transistor est saturé :</p>
+    <div class="equation-block">
+        $$ \beta_{min} = \frac{I_C}{I_B} = \frac{20,85 mA}{13,03 mA} = 1,6 $$
+    </div>
+
+    <p>Le gain minimal nécessaire pour la saturation est de 1,6, ce qui est largement inférieur au gain typique du BC547 (β = 200-300). Le transistor est donc en saturation. </p>
+
+    <div class="checkbox-result">
+        <span class="square-icon green-sq"></span> <strong>Pour E = 5 V : LED allumée</strong>
+    </div>
+
+    <h4>3.1.4 Résultats de simulation</h4>
+
+    <!-- IMAGE 13 :  Simulation temporelle LED -->
+    <div class="img-container">
+        <img src="simulation_temporelle_LED.png" alt="Résultat de la simulation temporelle montrant l'état de la LED en fonction du signal d'entrée">
+    </div>
+    <span class="caption">Résultat de la simulation temporelle montrant l'état de la LED en fonction du signal d'entrée</span>
+
+    <p><strong>Observations :</strong></p>
+    <ul>
+        <li>Quand E = 0 V : tension aux bornes de la LED ≈ 0 V → LED éteinte</li>
+        <li>Quand E = 5 V : tension aux bornes de la LED ≈ 2 V → LED allumée</li>
+        <li>Le temps de commutation est très rapide (quelques µs)</li>
+    </ul>
+
+    <hr>
+
+    <h3>3.2 Portes logiques à transistors</h3>
+    
+
+<!-- SIMULATION INTERACTIVE - Circuit de commande LED -->
+<div class="simulation-container">
+    <div class="simulation-label">🔌 Simulation Interactive - Circuit de commande LED avec transistor</div>
+    <iframe src="https://tinyurl.com/2cwkovyb" allowfullscreen></iframe>
+</div>
+<span class="caption">Simulation interactive du circuit de commande LED - Vous pouvez modifier les paramètres des composants</span>
+
+    <h4>3.2.1 Montage (a) - Inverseur (NOT)</h4>
+
+    <!-- IMAGE 14 : Schéma inverseur -->
+    <div class="img-container">
+        <img src="non.jpg" alt="Schéma de simulation de l'inverseur logique avec transistor BC547">
+    </div>
+    <span class="caption">Schéma de simulation de l'inverseur logique avec transistor BC547</span>
+
+    <p><strong>Analyse théorique :</strong></p>
+    <ul>
+        <li>Quand A = 0 V : transistor bloqué → S = 5 V → S = 1</li>
+        <li>Quand A = 5 V : transistor saturé → S = VCE_sat ≈ 0,2 V → S = 0</li>
+    </ul>
+
+    <div class="checkbox-result">
+        <span class="square-icon green-sq"></span> <strong>Fonction logique : S = ¬A (inverseur)</strong>
+    </div>
+
+    <div class="table-container">
+        <div class="blue-bar"></div>
+        <span class="table-title">Tableau 6 : Table de vérité inverseur</span>
+        <table>
+            <thead>
+                <tr>
+                    <th>A</th>
+                    <th>S théorique</th>
+                    <th>S simulé (V)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>0</td><td>1</td><td>4.95</td></tr>
+                <tr><td>1</td><td>0</td><td>0.20</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+        <h4>3.2.2 Montage (b) - Porte OU (OR)</h4>
+
+
+    <!-- IMAGE 15 : Schéma porte OR -->
+    <div class="img-container">
+        <img src="ou trans.jpg" alt="Schéma de simulation de la porte logique OU avec transistors BC547">
+    </div>
+    <span class="caption">Schéma de simulation de la porte logique OU avec transistors BC547</span>
+
+
+    <p><strong>Analyse théorique : </strong></p>
+    <ul>
+        <li>Quand A = 0 et B = 0 : les deux transistors bloqués → S ≈ 0 V → S = 0</li>
+        <li>Quand A = 1 ou B = 1 : au moins un transistor saturé → S ≈ 5 V → S = 1</li>
+    </ul>
+
+
+    <div class="checkbox-result">
+        <span class="square-icon green-sq"></span> <strong>Fonction logique :  S = A + B (porte OU)</strong>
+    </div>
+
+
+    <div class="table-container">
+        <div class="blue-bar"></div>
+        <span class="table-title">Tableau 7 :  Table de vérité porte OR</span>
+        <table>
+            <thead>
+                <tr>
+                    <th>A</th>
+                    <th>B</th>
+                    <th>S théorique</th>
+                    <th>S simulé (V)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>0</td><td>0</td><td>0</td><td>0.05</td></tr>
+                <tr><td>0</td><td>1</td><td>1</td><td>4.95</td></tr>
+                <tr><td>1</td><td>0</td><td>1</td><td>4.95</td></tr>
+                <tr><td>1</td><td>1</td><td>1</td><td>4.95</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+
+    <h4>3.2.3 Montage (c) - Porte ET (AND)</h4>
+
+
+    <!-- IMAGE 16 :  Schéma porte AND -->
+    <div class="img-container">
+        <img src="et trans.jpg" alt="Schéma de simulation de la porte logique ET avec transistors BC547">
+    </div>
+    <span class="caption">Schéma de simulation de la porte logique ET avec transistors BC547</span>
+
+
+    <p><strong>Analyse théorique :</strong></p>
+    <ul>
+        <li>Quand A = 0 ou B = 0 : au moins un transistor bloqué → S ≈ 0 V → S = 0</li>
+        <li>Quand A = 1 et B = 1 : les deux transistors saturés → S ≈ 5 V → S = 1</li>
+    </ul>
+
+
+    <div class="checkbox-result">
+        <span class="square-icon green-sq"></span> <strong>Fonction logique : S = A · B (porte ET)</strong>
+    </div>
+
+
+    <div class="table-container">
+        <div class="blue-bar"></div>
+        <span class="table-title">Tableau 8 :  Table de vérité porte AND</span>
+        <table>
+            <thead>
+                <tr>
+                    <th>A</th>
+                    <th>B</th>
+                    <th>S théorique</th>
+                    <th>S simulé (V)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>0</td><td>0</td><td>0</td><td>0.05</td></tr>
+                <tr><td>0</td><td>1</td><td>0</td><td>0.05</td></tr>
+                <tr><td>1</td><td>0</td><td>0</td><td>0.05</td></tr>
+                <tr><td>1</td><td>1</td><td>1</td><td>4.95</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+
+    <h4>3.2.4 Interprétation</h4>
+    <p>Ces montages montrent comment les transistors peuvent être utilisés comme interrupteurs commandés pour réaliser des fonctions logiques.  Le transistor BC547 est particulièrement adapté à ce type d'application grâce à son gain élevé et sa vitesse de commutation rapide.</p>
+
+    <hr>
+
+    <h2>4. CONCLUSION</h2>
+
+    <p>Ce projet a permis d'étudier en profondeur le fonctionnement des diodes et des transistors NPN à travers des simulations dans Proteus ISIS.  Les principaux résultats obtenus sont :</p>
+
+    <div class="yellow-highlight-bar"></div>
+
+    <p><strong>Pour la partie diodes :</strong></p>
+    <ul>
+        <li>Tension seuil mesurée :  Vs = 0,68 V (conforme aux attentes pour une diode en silicium)</li>
+        <li>Courant inverse très faible :  Iinv = -0,021 µA</li>
+        <li>Réalisation réussie des portes logiques OU et ET à diodes</li>
+    </ul>
+
+    <div class="blue-highlight-bar"></div>
+
+    <p><strong>Pour la partie transistors :</strong></p>
+    <ul>
+        <li>Fonctionnement correct du transistor BC547 en commutation pour commander une LED</li>
+        <li>Réalisation réussie des portes logiques NOT, NOR et NAND avec des transistors</li>
+        <li>Validation des caractéristiques électriques du BC547 dans différents régimes de fonctionnement</li>
+    </ul>
+
+    <p>Ce travail illustre l'importance fondamentale de ces composants dans l'électronique moderne et démontre comment ils peuvent être utilisés pour réaliser des fonctions logiques de base sans circuits intégrés complexes.</p>
+
+    <hr>
+
+    
+
+    
+
+</body>
+</html>
